@@ -24,7 +24,7 @@ def main():
     sys.path.append(app_root)
 
     try:
-        index = imp.load_source('index', os.path.join(app_root, 'boot.py'))
+        index = imp.load_source('index', os.path.join(app_root, 'index.py'))
     except IOError:
         print "Can't find index.py"
         return
