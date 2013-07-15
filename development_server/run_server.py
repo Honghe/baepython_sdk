@@ -12,8 +12,9 @@ def main():
                       help="host")
     parser.add_option("-p", "--port", type="int", dest="port", default="8080",
                       help="port")
-    parser.add_option("--app", type="str", dest="app_root", default='demo/',
-                      help="app_root")
+    # parser.add_option("--app", type="str", dest="app_root", default='demo/',
+    #                   help="app_root")
+
     options, args = parser.parse_args()
 
     app_root = os.path.abspath(os.path.expanduser(options.app_root))
@@ -37,13 +38,22 @@ def main():
         print "Invaild application"
         return
 
+    # Just warning for what project are running.
+    if options.app_root == 'demo/':
+        print 'Warning: running default demo project.'
+    if options.app_root == './':
+        print 'Warning: running a project under the same directory as file `run_server.py`.'
+
     files = ['index.py']
+    # Set werkzeug.serving.run_simple to serve static files in `static` folder of prject root.
+    static_files = {'/static': os.path.join(options.app_root, 'static')}
 
     try:
         run_simple(options.host, options.port, index.application,
                     use_reloader = True,
                     use_debugger = True,
                     extra_files = files,
+                    static_files = static_files,
                     threaded=True)
     except KeyboardInterrupt:
         pass 
