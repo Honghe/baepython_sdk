@@ -46,6 +46,9 @@ def main():
 
     files = ['index.py']
     # Set werkzeug.serving.run_simple to serve static files in `static` folder of prject root.
+    # Though set '/static' to os.path.join(options.app_root, 'static'),\
+    # werkzeug seems also auto search other static files under app, \
+    # just like Django lightweight `runserver` task.
     static_files = {'/static': os.path.join(options.app_root, 'static')}
 
     try:
